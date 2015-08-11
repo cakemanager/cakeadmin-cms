@@ -1,0 +1,25 @@
+{
+    "name": "cakemanager/cakeadmin-cms",
+    "description": "Cms plugin for CakePHP",
+    "type": "cakephp-plugin",
+    "require": {
+        "php": ">=5.4.16",
+        "cakephp/cakephp": "~3.0",
+        "erusev/parsedown": "dev-master",
+        "cakemanager/cakephp-cakeadmin": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cms\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Cms\\Test\\": "tests",
+            "Cake\\Test\\": "./vendor/cakephp/cakephp/tests"
+        }
+    }
+}
