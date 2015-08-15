@@ -73,7 +73,7 @@ class PathManager
 
     public function register($type, $model)
     {
-        if (!self::$_runnable) {
+        if (self::$_runnable) {
             return;
         }
 
