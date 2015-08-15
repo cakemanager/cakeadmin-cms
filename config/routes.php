@@ -21,6 +21,16 @@ Router::plugin('Cms', function ($routes) {
     $routes->fallbacks('InflectedRoute');
 });
 
+function routeLabel($type, $slug)
+{
+    if ($slug[0] == '/') {
+        $slug = substr($slug, 1);
+    }
+
+    $result = $type . '.' . $slug;
+    return $result;
+}
+
 if (Setting::read('CMS.Pages')) {
     $list = Cache::read('Routes.pages');
     if (!is_array($list)) {
@@ -30,7 +40,7 @@ if (Setting::read('CMS.Pages')) {
         Router::connect(
             $slug,
             ['plugin' => 'Cms', 'controller' => 'Pages', 'action' => 'view', $id],
-            ['_name' => 'page.' . $slug]
+            ['_name' => routeLabel('page', $slug)]
         );
     }
 }
@@ -59,7 +69,7 @@ if (Setting::read('CMS.Blogs')) {
         Router::connect(
             $slug,
             ['plugin' => 'Cms', 'controller' => 'Blogs', 'action' => 'view', $id],
-            ['_name' => 'blog.' . $slug]
+            ['_name' => routeLabel('blog', $slug)]
         );
     }
 
@@ -71,7 +81,7 @@ if (Setting::read('CMS.Blogs')) {
         Router::connect(
             $slug,
             ['plugin' => 'Cms', 'controller' => 'Categories', 'action' => 'view', $id],
-            ['_name' => 'category.' . $slug]
+            ['_name' => routeLabel('category', $slug)]
         );
     }
 }

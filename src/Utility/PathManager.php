@@ -61,14 +61,18 @@ class PathManager
         $tables = $collection->listTables();
 
         if (!in_array('cms_blogs', $tables)) {
+            self::$_runnable = false;
             return false;
         }
         if (!in_array('cms_categories', $tables)) {
+            self::$_runnable = false;
             return false;
         }
         if (!in_array('cms_pages', $tables)) {
+            self::$_runnable = false;
             return false;
         }
+        self::$_runnable = true;
     }
 
     public function register($type, $model)
