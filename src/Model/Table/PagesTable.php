@@ -15,6 +15,7 @@
 namespace Cms\Model\Table;
 
 use Cake\Cache\Cache;
+use Cake\Core\Configure;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -63,8 +64,10 @@ class PagesTable extends Table
                 'id',
                 'title',
                 'path',
-                'created_by' => [
-                    'get' => 'created_by.email'
+                'view' => [
+                    'before' => '<a target="_blank" href="' . Configure::read('App.fullBaseUrl'),
+                    'get' => 'path',
+                    'after' => '">View page</a>',
                 ],
                 'created'
             ],
