@@ -23,11 +23,15 @@ Router::plugin('Cms', function ($routes) {
 
 if (Setting::read('CMS.Pages')) {
     $list = Cache::read('Routes.pages');
-    if(!is_array($list)) {
+    if (!is_array($list)) {
         $list = [];
     }
     foreach ($list as $id => $slug) {
-        Router::connect($slug, ['plugin' => 'Cms', 'controller' => 'Pages', 'action' => 'view', $id]);
+        Router::connect(
+            $slug,
+            ['plugin' => 'Cms', 'controller' => 'Pages', 'action' => 'view', $id],
+            ['_name' => 'page.' . $slug]
+        );
     }
 }
 
@@ -35,7 +39,10 @@ if (Setting::read('CMS.Index')) {
     $value = Setting::read('CMS.Index');
     if (array_key_exists($value, $list)) {
         Router::scope('/', function ($routes) use ($value) {
-            $routes->connect('/', ['plugin' => 'Cms', 'controller' => 'Pages', 'action' => 'view', $value]);
+            $routes->connect(
+                '/',
+                ['plugin' => 'Cms', 'controller' => 'Pages', 'action' => 'view', $value]
+            );
             $routes->fallbacks('InflectedRoute');
         });
     }
@@ -45,19 +52,27 @@ if (Setting::read('CMS.Index')) {
 
 if (Setting::read('CMS.Blogs')) {
     $list = Cache::read('Routes.blogs');
-    if(!is_array($list)) {
+    if (!is_array($list)) {
         $list = [];
     }
     foreach ($list as $id => $slug) {
-        Router::connect($slug, ['plugin' => 'Cms', 'controller' => 'Blogs', 'action' => 'view', $id]);
+        Router::connect(
+            $slug,
+            ['plugin' => 'Cms', 'controller' => 'Blogs', 'action' => 'view', $id],
+            ['_name' => 'blog.' . $slug]
+        );
     }
 
     $list = Cache::read('Routes.categories');
-    if(!is_array($list)) {
+    if (!is_array($list)) {
         $list = [];
     }
     foreach ($list as $id => $slug) {
-        Router::connect($slug, ['plugin' => 'Cms', 'controller' => 'Categories', 'action' => 'view', $id]);
+        Router::connect(
+            $slug,
+            ['plugin' => 'Cms', 'controller' => 'Categories', 'action' => 'view', $id],
+            ['_name' => 'category.' . $slug]
+        );
     }
 }
 
