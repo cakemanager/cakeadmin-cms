@@ -23,6 +23,9 @@ Router::plugin('Cms', function ($routes) {
 
 if (Setting::read('CMS.Pages')) {
     $list = Cache::read('Routes.pages');
+    if(!is_array($list)) {
+        $list = [];
+    }
     foreach ($list as $id => $slug) {
         Router::connect($slug, ['plugin' => 'Cms', 'controller' => 'Pages', 'action' => 'view', $id]);
     }
@@ -42,11 +45,17 @@ if (Setting::read('CMS.Index')) {
 
 if (Setting::read('CMS.Blogs')) {
     $list = Cache::read('Routes.blogs');
+    if(!is_array($list)) {
+        $list = [];
+    }
     foreach ($list as $id => $slug) {
         Router::connect($slug, ['plugin' => 'Cms', 'controller' => 'Blogs', 'action' => 'view', $id]);
     }
 
     $list = Cache::read('Routes.categories');
+    if(!is_array($list)) {
+        $list = [];
+    }
     foreach ($list as $id => $slug) {
         Router::connect($slug, ['plugin' => 'Cms', 'controller' => 'Categories', 'action' => 'view', $id]);
     }
