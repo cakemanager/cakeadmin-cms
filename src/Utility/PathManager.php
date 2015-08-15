@@ -17,6 +17,7 @@ namespace Cms\Utility;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
 use Settings\Core\Setting;
@@ -28,6 +29,8 @@ class PathManager
 
     protected $_types = [];
 
+    protected static $_runnable = false;
+
     /**
      * instance
      *
@@ -36,6 +39,8 @@ class PathManager
      */
     public static function instance($manager = null)
     {
+        self::_validate();
+
         if ($manager instanceof PathManager) {
             static::$_generalManager = $manager;
         }
@@ -45,8 +50,33 @@ class PathManager
         return static::$_generalManager;
     }
 
+    protected static function _validate()
+    {
+        if(self::$_runnable) {
+            return;
+        }
+
+        $db = ConnectionManager::get('default');
+        $collection = $db->schemaCollection();
+        $tables = $collection->listTables();
+
+        if (!in_array('cms_blogs', $tables)) {
+            return false;
+        }
+        if (!in_array('cms_categories', $tables)) {
+            return false;
+        }
+        if (!in_array('cms_pages', $tables)) {
+            return false;
+        }
+    }
+
     public function register($type, $model)
     {
+        if (!self::$_runnable) {
+            return;
+        }
+
         $this->_types[$type] = $model;
 
         $this->buildRoutes($type);
