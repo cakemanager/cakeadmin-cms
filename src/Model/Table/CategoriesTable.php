@@ -20,6 +20,7 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Cms\Model\Entity\CmsData;
+use Cms\Utility\PathManager;
 
 /**
  * CmsData Model
