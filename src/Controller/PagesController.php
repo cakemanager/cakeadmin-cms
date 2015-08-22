@@ -31,11 +31,11 @@ class PagesController extends AppController
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($slug = null)
     {
         $page = $this->Pages
             ->find('active')
-            ->where(['Pages.Id' => $id])
+            ->where(['Pages.slug' => $slug])
             ->contain(['CreatedBy', 'ModifiedBy'])
             ->first();
         $this->set('page', $page);
